@@ -8,7 +8,6 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card shadow-lg border-0">
-                <!-- Profile Image -->
                 <div class="text-center p-4 bg-light">
                     <img src="@Model.User.ProfileImageUrl"
                          class="rounded-circle img-thumbnail"
@@ -17,13 +16,11 @@
                 </div>
 
                 <div class="card-body">
-                    <!-- Dentist Name -->
                     <h2 class="text-center text-primary mb-3">
                         @Model.User.FirstName @Model.User.LastName
                     </h2>
                     <hr class="mb-4" />
 
-                    <!-- Dentist Details -->
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <p class="fw-bold mb-1">Specialty:</p>
@@ -45,7 +42,6 @@
 
                     <hr class="mb-4" />
 
-                    <!-- Action Buttons -->
                     <div class="d-grid gap-2 d-md-flex justify-content-center">
                         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">
                             Edit

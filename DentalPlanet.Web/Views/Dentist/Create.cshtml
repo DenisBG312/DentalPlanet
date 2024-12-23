@@ -1,0 +1,41 @@
+﻿@model DentalPlanet.Web.ViewModels.Dentist.DentistCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Dentist";
+}
+
+@if (TempData["NoUsers"] != null)
+{
+    <div class="alert alert-warning mt-3">
+        @TempData["NoUsers"]
+    </div>
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Specialty">Specialty</label>
+        <input type="text" class="form-control" id="Specialty" name="Specialty" value="@Model?.Specialty" required />
+    </div>
+    
+    <div class="form-group">
+        <label for="Availability">Availability</label>
+        <input type="text" class="form-control" id="Availability" name="Availability" value="@Model?.Availability" />
+    </div>
+
+    <div class="form-group">
+        <label for="UserId">User</label>
+        <select class="form-control" id="UserId" name="UserId">
+            @if (ViewData["Users"] != null)
+            {
+                foreach (var user in (SelectList)ViewData["Users"])
+                {
+                    <option value="@user.Value">@user.Text</option>
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Create Dentist</button>
+</form>

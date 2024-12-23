@@ -11,12 +11,21 @@
     {
         <div class="col-md-4 mb-4">
             <div class="card shadow-sm">
+                <img 
+                    src="@dentist.User.ProfileImageUrl" 
+                    class="card-img-top img-fluid" 
+                    alt="@dentist.User.FirstName @dentist.User.LastName's Profile Picture"
+                    style="max-height: 200px; object-fit: cover;" />
+
                 <div class="card-body">
                     <h5 class="card-title text-primary">@dentist.User.FirstName @dentist.User.LastName</h5>
                     <p class="card-text">
                         <strong>Specialty:</strong> @dentist.Specialty<br />
                         <strong>Availability:</strong> @dentist.Availability<br />
-                        <strong>Email:</strong> <a href="mailto:@dentist.User.Email" class="text-decoration-none">@dentist.User.Email</a>
+                        <strong>Email:</strong> 
+                        <a href="mailto:@dentist.User.Email" class="text-decoration-none">
+                            @dentist.User.Email
+                        </a>
                     </p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-between">
                         <a asp-action="Details" asp-route-id="@dentist.Id" class="btn btn-primary btn-lg">Details</a>

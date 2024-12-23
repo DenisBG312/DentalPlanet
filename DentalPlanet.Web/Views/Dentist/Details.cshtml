@@ -1,0 +1,64 @@
+﻿@model DentalPlanet.Data.Models.Dentist
+
+@{
+    ViewData["Title"] = "Dentist Details";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <!-- Profile Image -->
+                <div class="text-center p-4 bg-light">
+                    <img src="@Model.User.ProfileImageUrl"
+                         class="rounded-circle img-thumbnail"
+                         alt="@Model.User.FirstName @Model.User.LastName's Profile Picture"
+                         style="width: 150px; height: 150px; object-fit: cover;" />
+                </div>
+
+                <div class="card-body">
+                    <!-- Dentist Name -->
+                    <h2 class="text-center text-primary mb-3">
+                        @Model.User.FirstName @Model.User.LastName
+                    </h2>
+                    <hr class="mb-4" />
+
+                    <!-- Dentist Details -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <p class="fw-bold mb-1">Specialty:</p>
+                            <p>@Model.Specialty</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <p class="fw-bold mb-1">Availability:</p>
+                            <p>@Model.Availability</p>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <p class="fw-bold mb-1">Email:</p>
+                            <p>
+                                <a href="mailto:@Model.User.Email" class="text-decoration-none text-primary">
+                                    @Model.User.Email
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4" />
+
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-center">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning btn-lg">
+                            Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-lg">
+                            Delete
+                        </a>
+                        <a asp-action="Index" class="btn btn-secondary btn-lg">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

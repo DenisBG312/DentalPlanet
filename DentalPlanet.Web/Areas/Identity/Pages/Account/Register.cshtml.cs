@@ -79,6 +79,8 @@ namespace DentalPlanet.Web.Areas.Identity.Pages.Account
             public string FirstName { get; set; }
             [Required] 
             public string LastName { get;set; }
+            [Required]
+            public string ProfileImgUrl { get; set; }
             
             [Required]
             [EmailAddress]
@@ -123,6 +125,7 @@ namespace DentalPlanet.Web.Areas.Identity.Pages.Account
                 user.Id = Guid.NewGuid().ToString();
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
+                user.ProfileImageUrl = Input.ProfileImgUrl;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

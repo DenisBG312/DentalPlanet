@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DentalPlanet.Models\DentalPlanet.Data.Models.csproj" />
+    <ProjectReference Include="..\DentalPlanet.Data.Models\DentalPlanet.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

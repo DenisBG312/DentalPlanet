@@ -145,7 +145,10 @@ namespace DentalPlanet.Web.Controllers
                 return BadRequest();
             }
 
-            var dentist = await context.Dentists.FindAsync(id);
+            var dentist = await context.Dentists
+                .Include(u => u.User)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
             if (dentist == null)
             {
                 return NotFound();
@@ -158,7 +161,10 @@ namespace DentalPlanet.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var dentist = await context.Dentists.FindAsync(id);
+            var dentist = await context.Dentists
+                .Include(d => d.User)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
             if (dentist == null)
             {
                 return NotFound();

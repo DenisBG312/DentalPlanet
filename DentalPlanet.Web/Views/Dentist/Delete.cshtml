@@ -1,0 +1,25 @@
+﻿@model DentalPlanet.Data.Models.Dentist
+
+@{
+    ViewData["Title"] = "Delete Dentist";
+}
+
+<h2>Delete Dentist</h2>
+
+<div>
+    <h3>Are you sure you want to delete this dentist?</h3>
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">Specialty</dt>
+            <dd class="col-sm-10">@Model.Specialty</dd>
+            <dt class="col-sm-2">Availability</dt>
+            <dd class="col-sm-10">@Model.Availability</dd>
+        </dl>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

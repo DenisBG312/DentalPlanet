@@ -80,6 +80,49 @@ namespace DentalPlanet.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(string? id)
+        {
+            if (id == null || await context.Dentists.FirstOrDefaultAsync(u => u.Id == id) == null)
+            {
+                return BadRequest();
+            }
+
+            Dentist dentist = await context.Dentists.FindAsync(id);
+
+            DentistEditViewModel editDentistModel = new DentistEditViewModel()
+            {
+                Id = dentist.Id,
+                Availability = dentist.Availability,
+                Specialty = dentist.Specialty
+            };
+
+            return View(editDentistModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(DentistEditViewModel dentist)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(dentist);
+            }
+
+            var existingDentist = await context.Dentists.FindAsync(dentist.Id);
+            if (existingDentist == null)
+            {
+                return NotFound();
+            }
+
+            existingDentist.Specialty = dentist.Specialty;
+            existingDentist.Availability = dentist.Availability;
+
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Details(string id)
         {
             var searchedDentist = await context.Dentists
@@ -92,6 +135,39 @@ namespace DentalPlanet.Web.Controllers
             }
 
             return View(searchedDentist);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string? id)
+        {
+            if (id == null || await context.Dentists.FirstOrDefaultAsync(d => d.Id == id) == null)
+            {
+                return BadRequest();
+            }
+
+            var dentist = await context.Dentists.FindAsync(id);
+            if (dentist == null)
+            {
+                return NotFound();
+            }
+
+            return View(dentist);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var dentist = await context.Dentists.FindAsync(id);
+            if (dentist == null)
+            {
+                return NotFound();
+            }
+
+            context.Dentists.Remove(dentist);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

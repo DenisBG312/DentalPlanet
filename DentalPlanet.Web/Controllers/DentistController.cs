@@ -4,24 +4,28 @@ using DentalPlanet.Web.ViewModels.Dentist;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList.Extensions;
 
 namespace DentalPlanet.Web.Controllers
 {
     public class DentistController : Controller
     {
         private readonly ApplicationDbContext context;
+        private const int pageSize = 3;
         public DentistController(ApplicationDbContext context)
         {
             this.context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
             var dentists = await context.Dentists
                 .Include(u => u.User)
                 .ToListAsync();
-            
-            return View(dentists);
+
+            var pagedDentists = dentists.ToPagedList(page, pageSize);
+
+            return View(pagedDentists);
         }
 
         [HttpGet]

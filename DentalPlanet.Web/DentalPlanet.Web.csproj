@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DentalPlanet.Data\DentalPlanet.Data.csproj" />
+    <ProjectReference Include="..\DentalPlanet.Services.Data\DentalPlanet.Services.Data.csproj" />
     <ProjectReference Include="..\DentalPlanet.Web.ViewModels\DentalPlanet.Web.ViewModels.csproj" />
   </ItemGroup>
 

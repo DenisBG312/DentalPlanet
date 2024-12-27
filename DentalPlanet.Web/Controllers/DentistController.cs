@@ -1,5 +1,7 @@
 ﻿using DentalPlanet.Data;
 using DentalPlanet.Data.Models;
+using DentalPlanet.Services.Data;
+using DentalPlanet.Services.Data.Interfaces;
 using DentalPlanet.Web.ViewModels.Dentist;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,17 +13,17 @@ namespace DentalPlanet.Web.Controllers
     public class DentistController : Controller
     {
         private readonly ApplicationDbContext context;
+        private readonly IDentistService dentistService;
         private const int pageSize = 3;
-        public DentistController(ApplicationDbContext context)
+        public DentistController(ApplicationDbContext context, IDentistService dentistService)
         {
             this.context = context;
+            this.dentistService = dentistService;
         }
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            var dentists = await context.Dentists
-                .Include(u => u.User)
-                .ToListAsync();
+            var dentists = await dentistService.GetDentistsAsync();
 
             var pagedDentists = dentists.ToPagedList(page, pageSize);
 
@@ -31,9 +33,7 @@ namespace DentalPlanet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var availableUsers = await context.Users
-                .Where(user => !context.Dentists.Any(dentist => dentist.UserId == user.Id))
-                .ToListAsync();
+            var availableUsers = await _dentistService.GetAvailableUsersAsync();
 
             if (!availableUsers.Any())
             {

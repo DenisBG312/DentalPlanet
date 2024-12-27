@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DentalPlanet.Data.Models\DentalPlanet.Data.Models.csproj" />
+    <ProjectReference Include="..\DentalPlanet.Data\DentalPlanet.Data.csproj" />
+    <ProjectReference Include="..\DentalPlanet.Web.ViewModels\DentalPlanet.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

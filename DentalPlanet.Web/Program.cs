@@ -1,5 +1,9 @@
 using DentalPlanet.Data;
 using DentalPlanet.Data.Models;
+using DentalPlanet.Data.Repository;
+using DentalPlanet.Data.Repository.Interfaces;
+using DentalPlanet.Services.Data;
+using DentalPlanet.Services.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +23,10 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+
+builder.Services.AddScoped<IRepository<Dentist, string>, BaseRepository<Dentist, string>>();
+builder.Services.AddScoped<IDentistService, DentistService>();
 
 var app = builder.Build();
 

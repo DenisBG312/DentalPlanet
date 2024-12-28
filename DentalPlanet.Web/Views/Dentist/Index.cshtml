@@ -1,6 +1,6 @@
 ﻿@using X.PagedList.Mvc.Core;
 @using X.PagedList;
-@model IPagedList<DentalPlanet.Data.Models.Dentist>
+@model IPagedList<DentalPlanet.Web.ViewModels.Dentist.DentistIndexViewModel>
 @{
     ViewData["Title"] = "Dentists";
 }
@@ -113,12 +113,15 @@
                                        class="btn btn-outline-danger">
                                         <i class="fas fa-trash me-1"></i> Delete
                                     </a>
-                                    <a asp-action="Create"
-                                       asp-controller="Appointment"
-                                       asp-route-dentistId="@dentist.Id"
-                                       class="btn btn-outline-success">
-                                        <i class="fas fa-calendar-plus me-1"></i> Book Appointment
-                                    </a>
+                                    @if (!dentist.IsDentist)
+                                    {
+                                        <a asp-action="Create"
+                                           asp-controller="Appointment"
+                                           asp-route-dentistId="@dentist.Id"
+                                           class="btn btn-outline-success">
+                                            <i class="fas fa-calendar-plus me-1"></i> Book Appointment
+                                        </a>
+                                    }
                                 </div>
                             </div>
                         </div>

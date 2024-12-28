@@ -3,9 +3,12 @@ using DentalPlanet.Data.Models;
 using DentalPlanet.Services.Data;
 using DentalPlanet.Services.Data.Interfaces;
 using DentalPlanet.Web.ViewModels.Dentist;
+using DentalPlanet.Web.ViewModels.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing.Printing;
+using System.Security.Claims;
 using X.PagedList.Extensions;
 
 namespace DentalPlanet.Web.Controllers
@@ -23,9 +26,28 @@ namespace DentalPlanet.Web.Controllers
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            var dentists = await dentistService.GetDentistsAsync();
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var pagedDentists = dentists.ToPagedList(page, pageSize);
+            var dentists = await context.Dentists
+                .Include(d => d.User)
+                .ToListAsync();
+
+            var pagedDentists = dentists
+                .Select(d => new DentistIndexViewModel
+                {
+                    Id = d.Id,
+                    Specialty = d.Specialty,
+                    Availability = d.Availability,
+                    IsDentist = d.UserId == currentUserId,
+                    User = new UserViewModel
+                    {
+                        ProfileImageUrl = d.User.ProfileImageUrl,
+                        FirstName = d.User.FirstName,
+                        LastName = d.User.LastName,
+                        Email = d.User.Email
+                    }
+                })
+                .ToPagedList(page, pageSize);
 
             return View(pagedDentists);
         }

@@ -63,16 +63,6 @@ namespace DentalPlanet.Web.Controllers
 
             var userId = GetCurrentUserId();
 
-            var dentist = await _context.Dentists
-                .Include(d => d.User)
-                .FirstOrDefaultAsync(d => d.UserId == userId);
-
-            if (dentist != null)
-            {
-                ViewData["Error"] = "A dentist cannot create an appointment for another dentist.";
-                return View(model);
-            }
-
             var patient = await _context.Patients.FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (patient == null)

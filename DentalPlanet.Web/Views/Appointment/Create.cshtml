@@ -1,0 +1,33 @@
+﻿@model DentalPlanet.Web.ViewModels.Appointment.AppointmentCreateViewModel
+@{
+    ViewData["Title"] = "Create Appointment";
+}
+
+@if (ViewData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @ViewData["Error"]
+    </div>
+}
+
+<div class="container mt-5">
+    <h1 class="text-center">Book an Appointment</h1>
+    <hr />
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="AppointmentDate" class="form-label"></label>
+            <input asp-for="AppointmentDate" class="form-control" type="datetime-local" />
+            <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+        </div>
+        <input type="hidden" asp-for="DentistId" />
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-calendar-check me-2"></i> Confirm Appointment
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

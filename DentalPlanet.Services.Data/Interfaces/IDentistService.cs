@@ -11,7 +11,7 @@ namespace DentalPlanet.Services.Data.Interfaces
     public interface IDentistService
     {
         Task<List<Dentist>> GetDentistsAsync();
-        Task<List<Dentist>> GetAvailableUsersAsync();
+        Task<List<ApplicationUser>> GetAvailableUsersAsync();
         Task<bool> CreateDentistAsync(DentistCreateViewModel model);
     }
 }

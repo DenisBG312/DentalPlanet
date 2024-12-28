@@ -26,6 +26,7 @@ builder.Services.AddControllersWithViews();
 
 
 builder.Services.AddScoped<IRepository<Dentist, string>, BaseRepository<Dentist, string>>();
+builder.Services.AddScoped<IRepository<ApplicationUser, string>, BaseRepository<ApplicationUser, string>>();
 builder.Services.AddScoped<IDentistService, DentistService>();
 
 var app = builder.Build();

@@ -33,7 +33,7 @@ namespace DentalPlanet.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var availableUsers = await _dentistService.GetAvailableUsersAsync();
+            var availableUsers = await dentistService.GetAvailableUsersAsync();
 
             if (!availableUsers.Any())
             {
@@ -51,35 +51,19 @@ namespace DentalPlanet.Web.Controllers
             ModelState.Remove("User");
             if (ModelState.IsValid)
             {
-                bool userAlreadyDentist = await context.Dentists.AnyAsync(d => d.UserId == model.UserId);
-                if (userAlreadyDentist)
+                var isCreated = await dentistService.CreateDentistAsync(model);
+                if (!isCreated)
                 {
                     ModelState.AddModelError("UserId", "The selected user is already assigned as a dentist.");
                 }
                 else
                 {
-                    var dentist = new Dentist
-                    {
-                        Specialty = model.Specialty,
-                        Availability = model.Availability,
-                        UserId = model.UserId
-                    };
-
-                    context.Add(dentist);
-                    await context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
-
-                var availableUsers = await context.Users
-                    .Where(user => !context.Dentists.Any(dentist => dentist.UserId == user.Id))
-                    .ToListAsync();
-                
-                ViewData["Users"] = new SelectList(availableUsers, "Id", "UserName");
-                return View(model);
             }
 
-            var users = await context.Users.ToListAsync();
-            ViewData["Users"] = new SelectList(users, "Id", "UserName");
+            var availableUsers = await dentistService.GetAvailableUsersAsync();
+            ViewData["Users"] = new SelectList(availableUsers, "Id", "UserName");
 
             return View(model);
         }

@@ -17,22 +17,24 @@ namespace DentalPlanet.Web.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var userId = GetCurrentUserId();
 
             var patient = await _context.Patients.FirstOrDefaultAsync(p => p.UserId == userId);
-            if (patient == null)
-            {
-                return NotFound("No patient record found for the current user.");
-            }
 
-            var appointments = await _context.Appointments
-                .Include(u => u.Dentist)
-                .ThenInclude(u => u.User)
-                .Where(a => a.PatientId == patient.Id)
-                .ToListAsync();
+            var appointments = new List<Appointment>();
+
+            if (patient != null)
+            {
+                appointments = await _context.Appointments
+                    .Include(u => u.Dentist)
+                    .ThenInclude(u => u.User)
+                    .Where(a => a.PatientId == patient.Id)
+                    .ToListAsync();
+            }
 
             return View(appointments);
         }
